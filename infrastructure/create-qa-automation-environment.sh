@@ -2,7 +2,7 @@
 PATH="$PATH:/usr/local/bin"
 APP_NAME="Petclinic"
 CFN_KEYPAIR="yurttav-$APP_NAME-dev-${BUILD_NUMBER}.key"
-CFN_TEMPLATE="./infrastructure/dev-docker-swarm-infrastructure-cfn-template.yml"
+CFN_TEMPLATE="./infrastructure/docker-swarm-infrastructure-cfn-template.yml"
 AWS_REGION="us-east-1"
 export ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${CFN_KEYPAIR}"
 export ANSIBLE_HOST_KEY_CHECKING=False
@@ -28,7 +28,7 @@ ansible-playbook -i ./ansible/inventory/dev_stack_dynamic_inventory_aws_ec2.yaml
 # Build, Deploy, Test the application
 
 # Tear down the Docker Swarm infrastructure
-#aws cloudformation delete-stack --region ${AWS_REGION} --stack-name ${AWS_STACK_NAME}
+aws cloudformation delete-stack --region ${AWS_REGION} --stack-name ${AWS_STACK_NAME}
 # Delete key pair
 aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${CFN_KEYPAIR}
 rm -rf ${CFN_KEYPAIR}
