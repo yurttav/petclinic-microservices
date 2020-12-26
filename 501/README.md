@@ -2218,7 +2218,7 @@ pipeline {
 
 ```bash
 git add .
-git commit -m "added jenkinsfile for creating manual qa environment"
+git commit -m 'added jenkinsfile for creating manual qa environment'
 git push --set-upstream origin feature/msp-18
 git checkout dev
 git merge feature/msp-18
