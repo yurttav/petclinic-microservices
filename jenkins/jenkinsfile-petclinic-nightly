@@ -12,7 +12,6 @@ pipeline {
         CFN_TEMPLATE="./infrastructure/dev-docker-swarm-infrastructure-cfn-template.yml"
         ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${CFN_KEYPAIR}"
         ANSIBLE_HOST_KEY_CHECKING="False"
-        ANSIBLE_CONFIG="./ansible/inventory/ansible.cfg"
     }
     stages {
         stage('Create ECR Repo') {
