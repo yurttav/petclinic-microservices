@@ -89,7 +89,7 @@ Resources:
   DockerInstance1:
     Type: AWS::EC2::Instance
     DependsOn:
-        - "DockerInstance2"
+        - "DockerInstance5"
     Properties:
       LaunchTemplate:
         LaunchTemplateId: !Ref DockerMachineLT
