@@ -1102,7 +1102,7 @@ aws --version
 
 ```bash
 PATH="$PATH:/usr/local/bin"
-CFN_KEYPAIR="call-ansible-test-dev.key"
+CFN_KEYPAIR="yurttav-ansible-test-dev.key"
 AWS_REGION="us-east-1"
 aws ec2 create-key-pair --region ${AWS_REGION} --key-name ${CFN_KEYPAIR} --query "KeyMaterial" --output text > ${CFN_KEYPAIR}
 chmod 400 ${CFN_KEYPAIR}
@@ -1113,8 +1113,8 @@ chmod 400 ${CFN_KEYPAIR}
 ```bash
 PATH="$PATH:/usr/local/bin"
 APP_NAME="Petclinic"
-APP_STACK_NAME="Call-$APP_NAME-App-${BUILD_NUMBER}"
-CFN_KEYPAIR="call-ansible-test-dev.key"
+APP_STACK_NAME="yurttav-$APP_NAME-App-${BUILD_NUMBER}"
+CFN_KEYPAIR="yurttav-ansible-test-dev.key"
 CFN_TEMPLATE="./infrastructure/dev-docker-swarm-infrastructure-cfn-template.yml"
 AWS_REGION="us-east-1"
 aws cloudformation create-stack --region ${AWS_REGION} --stack-name ${APP_STACK_NAME} --capabilities CAPABILITY_IAM --template-body file://${CFN_TEMPLATE} --parameters ParameterKey=KeyPairName,ParameterValue=${CFN_KEYPAIR}
@@ -1123,7 +1123,7 @@ aws cloudformation create-stack --region ${AWS_REGION} --stack-name ${APP_STACK_
 - After running the job above, replace the script with the one below in order to test SSH connection with one of the docker instance.
 
 ```bash
-CFN_KEYPAIR="call-ansible-test-dev.key"
+CFN_KEYPAIR="yurttav-ansible-test-dev.key"
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ${WORKSPACE}/${CFN_KEYPAIR} ec2-user@172.31.91.243 hostname
 ```
 
@@ -1149,7 +1149,7 @@ git push
 
 ```bash
 PATH="$PATH:/usr/local/bin"
-CFN_KEYPAIR="call-ansible-test-dev.key"
+CFN_KEYPAIR="yurttav-ansible-test-dev.key"
 export ANSIBLE_INVENTORY="${WORKSPACE}/ansible/inventory/hosts.ini"
 export ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${CFN_KEYPAIR}"
 export ANSIBLE_HOST_KEY_CHECKING=False
@@ -1243,11 +1243,11 @@ git push
 
 ```bash
 APP_NAME="Petclinic"
-CFN_KEYPAIR="call-ansible-test-dev.key"
+CFN_KEYPAIR="yurttav-ansible-test-dev.key"
 PATH="$PATH:/usr/local/bin"
 export ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${CFN_KEYPAIR}"
 export ANSIBLE_HOST_KEY_CHECKING=False
-export APP_STACK_NAME="Call-$APP_NAME-App-${BUILD_NUMBER}"
+export APP_STACK_NAME="yurttav-$APP_NAME-App-${BUILD_NUMBER}"
 # Dev Stack
 sed -i "s/APP_STACK_NAME/$APP_STACK_NAME/" ./ansible/inventory/dev_stack_dynamic_inventory_aws_ec2.yaml
 cat ./ansible/inventory/dev_stack_dynamic_inventory_aws_ec2.yaml
@@ -1271,11 +1271,11 @@ ansible-inventory -v -i ./ansible/inventory/dev_stack_swarm_workers_aws_ec2.yaml
 ```bash
 # Test dev dynamic inventory by pinging
 APP_NAME="Petclinic"
-CFN_KEYPAIR="call-ansible-test-dev.key"
+CFN_KEYPAIR="yurttav-ansible-test-dev.key"
 PATH="$PATH:/usr/local/bin"
 export ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${CFN_KEYPAIR}"
 export ANSIBLE_HOST_KEY_CHECKING=False
-export APP_STACK_NAME="Call-$APP_NAME-App-${BUILD_NUMBER}"
+export APP_STACK_NAME="yurttav-$APP_NAME-App-${BUILD_NUMBER}"
 sed -i "s/APP_STACK_NAME/$APP_STACK_NAME/" ./ansible/inventory/dev_stack_dynamic_inventory_aws_ec2.yaml
 ansible -i ./ansible/inventory/dev_stack_dynamic_inventory_aws_ec2.yaml all -m ping
 ```
@@ -1408,11 +1408,11 @@ git push
 
 ```bash
 APP_NAME="Petclinic"
-CFN_KEYPAIR="call-ansible-test-dev.key"
+CFN_KEYPAIR="yurttav-ansible-test-dev.key"
 PATH="$PATH:/usr/local/bin"
 export ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${CFN_KEYPAIR}"
 export ANSIBLE_HOST_KEY_CHECKING=False
-export APP_STACK_NAME="Call-$APP_NAME-App-${BUILD_NUMBER}"
+export APP_STACK_NAME="yurttav-$APP_NAME-App-${BUILD_NUMBER}"
 sed -i "s/APP_STACK_NAME/$APP_STACK_NAME/" ./ansible/inventory/dev_stack_dynamic_inventory_aws_ec2.yaml
 # Swarm Setup for all nodes (instances)
 ansible-playbook -i ./ansible/inventory/dev_stack_dynamic_inventory_aws_ec2.yaml -b ./ansible/playbooks/pb_setup_for_all_docker_swarm_instances.yaml
@@ -1429,7 +1429,7 @@ ansible-playbook -i ./ansible/inventory/dev_stack_dynamic_inventory_aws_ec2.yaml
 ```bash
 PATH="$PATH:/usr/local/bin"
 APP_NAME="Petclinic"
-AWS_STACK_NAME="Call-$APP_NAME-App-${BUILD_NUMBER}"
+AWS_STACK_NAME="yurttav-$APP_NAME-App-${BUILD_NUMBER}"
 AWS_REGION="us-east-1"
 aws cloudformation delete-stack --region ${AWS_REGION} --stack-name ${AWS_STACK_NAME}
 ```
@@ -1438,7 +1438,7 @@ aws cloudformation delete-stack --region ${AWS_REGION} --stack-name ${AWS_STACK_
 
 ```bash
 PATH="$PATH:/usr/local/bin"
-CFN_KEYPAIR="call-ansible-test-dev.key"
+CFN_KEYPAIR="yurttav-ansible-test-dev.key"
 AWS_REGION="us-east-1"
 aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${CFN_KEYPAIR}
 rm -rf ${CFN_KEYPAIR}
@@ -1450,12 +1450,12 @@ rm -rf ${CFN_KEYPAIR}
 # Environment variables
 PATH="$PATH:/usr/local/bin"
 APP_NAME="Petclinic"
-CFN_KEYPAIR="Call-$APP_NAME-dev-${BUILD_NUMBER}.key"
+CFN_KEYPAIR="yurttav-$APP_NAME-dev-${BUILD_NUMBER}.key"
 CFN_TEMPLATE="./infrastructure/dev-docker-swarm-infrastructure-cfn-template.yml"
 AWS_REGION="us-east-1"
 export ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${CFN_KEYPAIR}"
 export ANSIBLE_HOST_KEY_CHECKING=False
-export APP_STACK_NAME="Call-$APP_NAME-App-${BUILD_NUMBER}"
+export APP_STACK_NAME="yurttav-$APP_NAME-App-${BUILD_NUMBER}"
 # Create key pair for Ansible
 aws ec2 create-key-pair --region ${AWS_REGION} --key-name ${CFN_KEYPAIR} --query "KeyMaterial" --output text > ${CFN_KEYPAIR}
 chmod 400 ${CFN_KEYPAIR}
@@ -1857,12 +1857,12 @@ pipeline {
     environment {
         PATH=sh(script:"echo $PATH:/usr/local/bin", returnStdout:true).trim()
         APP_NAME="petclinic"
-        APP_STACK_NAME="Call-${APP_NAME}-app-${BUILD_NUMBER}"
+        APP_STACK_NAME="yurttav-${APP_NAME}-app-${BUILD_NUMBER}"
         APP_REPO_NAME="clarusway-repo/${APP_NAME}-app-dev"
         AWS_ACCOUNT_ID=sh(script:'export PATH="$PATH:/usr/local/bin" && aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
         AWS_REGION="us-east-1"
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-        CFN_KEYPAIR="call-${APP_NAME}-dev-${BUILD_NUMBER}.key"
+        CFN_KEYPAIR="yurttav-${APP_NAME}-dev-${BUILD_NUMBER}.key"
         CFN_TEMPLATE="./infrastructure/dev-docker-swarm-infrastructure-cfn-template.yml"
         ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${CFN_KEYPAIR}"
         ANSIBLE_HOST_KEY_CHECKING="False"
@@ -2542,8 +2542,8 @@ git checkout feature/msp-20
 PATH="$PATH:/usr/local/bin"
 APP_NAME="petclinic"
 APP_REPO_NAME="clarusway-repo/petclinic-app-qa"
-APP_STACK_NAME="Call-petclinic-App-QA-1"
-CFN_KEYPAIR="call-petclinic-qa.key"
+APP_STACK_NAME="yurttav-petclinic-App-QA-1"
+CFN_KEYPAIR="yurttav-petclinic-qa.key"
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 AWS_REGION="us-east-1"
 ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
@@ -3087,7 +3087,7 @@ git checkout feature/msp-23
 
 * Explain [Rancher Container Management Tool](https://rancher.com/docs/rancher/v2.x/en/overview/architecture/).
 
-* Create an IAM Policy with name of `call-rke-controlplane-policy.json` and also save it under `infrastructure` for `Control Plane` node to enable Rancher to create or remove EC2 resources.
+* Create an IAM Policy with name of `yurttav-rke-controlplane-policy.json` and also save it under `infrastructure` for `Control Plane` node to enable Rancher to create or remove EC2 resources.
 
 ``` json
 {
@@ -3159,7 +3159,7 @@ git checkout feature/msp-23
 }
 ```
 
-* Create an IAM Policy with name of `call-rke-etcd-worker-policy.json` and also save it under `infrastructure` for `etcd` or `worker` nodes to enable Rancher to get information from EC2 resources.
+* Create an IAM Policy with name of `yurttav-rke-etcd-worker-policy.json` and also save it under `infrastructure` for `etcd` or `worker` nodes to enable Rancher to get information from EC2 resources.
 
 ```json
 {
@@ -3184,17 +3184,17 @@ git checkout feature/msp-23
 }
 ```
 
-* Create an IAM Role with name of `call-rke-role` to attach RKE nodes (instances) using `call-rke-controlplane-policy` and `call-rke-etcd-worker-policy`.
+* Create an IAM Role with name of `yurttav-rke-role` to attach RKE nodes (instances) using `yurttav-rke-controlplane-policy` and `yurttav-rke-etcd-worker-policy`.
 
-* Create a security group for External Application Load Balancer of Rancher with name of `call-rke-alb-sg` and allow HTTP (Port 80) and HTTPS (Port 443) connections from anywhere.
+* Create a security group for External Application Load Balancer of Rancher with name of `yurttav-rke-alb-sg` and allow HTTP (Port 80) and HTTPS (Port 443) connections from anywhere.
   
-* Create a security group for RKE Kubernetes Cluster with name of `call-rke-cluster-sg` and define following inbound and outbound rules.
+* Create a security group for RKE Kubernetes Cluster with name of `yurttav-rke-cluster-sg` and define following inbound and outbound rules.
 
   * Inbound rules;
 
-    * Allow TCP on port 80 from Application Load Balancer.
+    * Allow HTTP protocol (TCP on port 80) from Application Load Balancer.
 
-    * Allow TCP on port 443 from any source that needs to use Rancher UI or API.
+    * Allow HTTPS protocol (TCP on port 443) from any source that needs to use Rancher UI or API.
 
     * Allow TCP on port 6443 from any source that needs to use Kubernetes API server(ex. Jenkins Server).
   
@@ -3204,25 +3204,25 @@ git checkout feature/msp-23
 
     * Allow SSH on port 22 to any node IP from a node created using Node Driver.
 
-    * Allow TCP on port 443 to `35.160.43.145/32`, `35.167.242.46/32`, `52.33.59.17/32` for catalogs of `git.rancher.io`.
+    * Allow HTTPS protocol (TCP on port 443) to `35.160.43.145/32`, `35.167.242.46/32`, `52.33.59.17/32` for catalogs of `git.rancher.io`.
 
     * Allow TCP on port 2376 to any node IP from a node created using Node Driver for Docker machine TLS port.
 
-  * Allow all protocol on all port from `call-rke-cluster-sg` for self communication between Rancher `controlplane`, `etcd`, `worker` nodes.
+  * Allow all protocol on all port from `yurttav-rke-cluster-sg` for self communication between Rancher `controlplane`, `etcd`, `worker` nodes.
 
-* Log into Jenkins Server and create `call-rancher.key` key-pair for Rancher Server using AWS CLI
+* Log into Jenkins Server and create `yurttav-rancher.key` key-pair for Rancher Server using AWS CLI
   
 ```bash
-aws ec2 create-key-pair --region us-east-1 --key-name call-rancher.key --query KeyMaterial --output text > ~/.ssh/call-rancher.key
-chmod 400 ~/.ssh/call-rancher.key
+aws ec2 create-key-pair --region us-east-1 --key-name yurttav-rancher.key --query KeyMaterial --output text > ~/.ssh/yurttav-rancher.key
+chmod 400 ~/.ssh/yurttav-rancher.key
 ```
 
-* Launch an EC2 instance using `Ubuntu Server 20.04 LTS (HVM) ami-0885b1f6bd170450c  (64-bit x86)` with `t2.medium` type, 16 GB root volume,  `call-rke-cluster-sg` security group, `call-rke-role` IAM Role, `Name:Call-Rancher-Cluster-Instance` tag and `call-rancher.key` key-pair. Take note of `subnet id` of EC2. 
+* Launch an EC2 instance using `Ubuntu Server 20.04 LTS (HVM) ami-0885b1f6bd170450c  (64-bit x86)` with `t2.medium` type, 16 GB root volume,  `yurttav-rke-cluster-sg` security group, `yurttav-rke-role` IAM Role, `Name:yurttav-Rancher-Cluster-Instance` tag and `yurttav-rancher.key` key-pair. Take note of `subnet id` of EC2. 
 
-* Attach a tag to the `nodes (intances)`, `subnets` and `security group` for Rancher with `Key = kubernetes.io/cluster/Call-Rancher` and `Value = owned`.
+* Attach a tag to the `nodes (intances)`, `subnets` and `security group` for Rancher with `Key = kubernetes.io/cluster/yurttav-Rancher` and `Value = owned`.
   
   
-* Log into `Call-Rancher-Cluster-Instance` from Jenkins Server (Bastion host) and install Docker using the following script.
+* Log into `yurttav-Rancher-Cluster-Instance` from Jenkins Server (Bastion host) and install Docker using the following script.
 
 ```bash
 # Set hostname of instance
@@ -3239,7 +3239,7 @@ sudo usermod -aG docker ubuntu
 newgrp docker
 ```
 
-* Create a target groups with name of `call-rancher-http-80-tg` with following setup and add the `rancher instances` to it.
+* Create a target groups with name of `yurttav-rancher-http-80-tg` with following setup and add the `rancher instances` to it.
 
 ```bash
 Target type         : instance
@@ -3257,7 +3257,7 @@ Interval            : 10 seoconds
 Success             : 200
 ```
 
-* Create Application Load Balancer with name of `call-rancher-alb` using `call-rke-alb-sg` security group with following settings and add `call-rancher-http-80-tg` target group to it.
+* Create Application Load Balancer with name of `yurttav-rancher-alb` using `yurttav-rke-alb-sg` security group with following settings and add `yurttav-rancher-http-80-tg` target group to it.
 
 ```text
 Scheme              : internet-facing
@@ -3267,12 +3267,12 @@ IP address type     : ipv4
 Protocol            : HTTPS/HTTP
 Port                : 443/80
 Availability Zones  : Select AZs of RKE instances
-Target group        : `call-rancher-http-80-tg` target group 
+Target group        : `yurttav-rancher-http-80-tg` target group 
 ```
 
 * Configure ALB Listener of HTTP on `Port 80` to redirect traffic to HTTPS on `Port 443`.
 
-* Create DNS A record for `rancher.clarusway.us` and attach the `call-rancher-alb` application load balancer to it.
+* Create DNS A record for `rancher.clarusway.us` and attach the `yurttav-rancher-alb` application load balancer to it.
 
 * Install RKE, the Rancher Kubernetes Engine, [Kubernetes distribution and command-line tool](https://rancher.com/docs/rke/latest/en/installation/)) on Jenkins Server.
 
@@ -3298,7 +3298,7 @@ services:
     creation: 6h
     retention: 24h
 
-ssh_key_path: ~/.ssh/call-rancher.key
+ssh_key_path: ~/.ssh/yurttav-rancher.key
 
 # Required for external TLS termination with
 # ingress-nginx v0.22+
@@ -3376,9 +3376,9 @@ kubectl -n cattle-system get pods
 
 ## MSP 25 - Create Staging and Production Environment with Rancher
 
-* To provide access of Rancher to the cloud resources, create a `Cloud Credentials` for AWS on Rancher and name it as `Call-AWS-Training-Account`.
+* To provide access of Rancher to the cloud resources, create a `Cloud Credentials` for AWS on Rancher and name it as `yurttav-AWS-Training-Account`.
 
-* Create a `Node Template` on Rancher with following configuration for to be used while launching the EC2 instances and name it as `Call-AWS-RancherOs-Template`.
+* Create a `Node Template` on Rancher with following configuration for to be used while launching the EC2 instances and name it as `yurttav-AWS-RancherOs-Template`.
 
 ```text
 Region            : us-east-1
@@ -3790,9 +3790,44 @@ git branch feature/msp-28
 git checkout feature/msp-28
 ```
 
-* Create an `A` record of `petclinic.clarusway.us` in your hosted zone (in our case `clarusway.us`) using AWS Route 53 domain registrar and bind it to your `petclinic cluster`.
+* Create a target group with name of `matt-petclinic-http-443-tg` with following setup and add the `petclinic application instances` to it.
 
-* Configure TLS(SSL) certificate for `petclinic.clarusway.us` using `cert-manager` on petclinic K8s cluster.
+```text
+Target type         : instance
+Protocol            : HTTPS
+Port                : 443
+
+<!-- Health Checks Settings -->
+Protocol            : HTTPS
+Path                : /healthz
+Port                : traffic port
+Healthy threshold   : 3
+Unhealthy threshold : 3
+Timeout             : 5 seconds
+Interval            : 10 seoconds
+Success             : 200
+```
+
+* Create Application Load Balancer with name of `matt-petclinic-alb` using `matt-rke-alb-sg` security group with following settings and add `matt-petclinic-http-443-tg` target group to it.
+
+```text
+Scheme              : internet-facing
+IP address type     : ipv4
+
+<!-- Listeners-->
+Protocol            : HTTPS/HTTP
+Port                : 443/80
+Availability Zones  : Select AZs of RKE instances
+Target group        : `matt-petclinic-http-443-tg` target group
+```
+
+* Configure ALB Listener of HTTP on `Port 80` to redirect traffic to HTTPS on `Port 443`.
+
+* Create DNS A record for `rancher.clarusway.us` and 
+
+* Create an `A` record of `petclinic003.clarusway.us` in your hosted zone (in our case `clarusway.us`) using AWS Route 53 domain registrar and attach the `matt-petclinic-alb` application load balancer to it.
+
+* Configure TLS(SSL) certificate for `petclinic003.clarusway.us` using `cert-manager` on petclinic K8s cluster with the following steps.
 
 * Log into Jenkins Server and configure the `kubectl` to connect to petclinic cluster by getting the `Kubeconfig` file from Rancher and save it as `$HOME/.kube/config` or set `KUBECONFIG` environment variable.
 
@@ -3810,10 +3845,10 @@ kubectl get ns
   * Create the namespace for cert-manager
 
   ```bash
-  kubectl create namespace cert-manager
+    kubectl create namespace cert-manager
   ```
 
-  * Add the Jetstack Helm repository
+  * Add the Jetstack Helm reposito
 
   ```bash
   helm repo add jetstack https://charts.jetstack.io
@@ -3835,9 +3870,9 @@ kubectl get ns
 
   ```bash
   helm install \
-    cert-manager jetstack/cert-manager \
-    --namespace cert-manager \
-    --version v1.0.4
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v1.0.4
   ```
 
   * Verify that the cert-manager is deployed correctly.
@@ -3871,7 +3906,7 @@ spec:
           class: nginx
 ```
 
-* Apply and check if `ClusterIssuer` resource is created.
+* Check if `ClusterIssuer` resource is created.
 
 ```bash
 export KUBECONFIG="$HOME/petclinic-config"
@@ -3905,6 +3940,9 @@ git checkout master
 git merge feature/msp-28
 git push origin master
 ```
+
+* Run the `Production Pipeline` `petclinic-prod` on Jenkins manually to examine the petclinic application.
+
 
 ## MSP 29 - Monitoring with Prometheus and Grafana
 
